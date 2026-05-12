@@ -110,21 +110,21 @@ let move = {
     down: false
 };
 
-// LEFT
-document.getElementById("left").addEventListener("touchstart", () => move.left = true);
-document.getElementById("left").addEventListener("touchend", () => move.left = false);
-
-// RIGHT
-document.getElementById("right").addEventListener("touchstart", () => move.right = true);
-document.getElementById("right").addEventListener("touchend", () => move.right = false);
-
 // UP
-document.getElementById("up").addEventListener("touchstart", () => move.up = true);
-document.getElementById("up").addEventListener("touchend", () => move.up = false);
+document.getElementById("up").addEventListener("pointerdown", () => control.up = true);
+document.getElementById("up").addEventListener("pointerup", () => control.up = false);
 
 // DOWN
-document.getElementById("down").addEventListener("touchstart", () => move.down = true);
-document.getElementById("down").addEventListener("touchend", () => move.down = false);
+document.getElementById("down").addEventListener("pointerdown", () => control.down = true);
+document.getElementById("down").addEventListener("pointerup", () => control.down = false);
+
+// LEFT
+document.getElementById("left").addEventListener("pointerdown", () => control.left = true);
+document.getElementById("left").addEventListener("pointerup", () => control.left = false);
+
+// RIGHT
+document.getElementById("right").addEventListener("pointerdown", () => control.right = true);
+document.getElementById("right").addEventListener("pointerup", () => control.right = false);
 
 
 
