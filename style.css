@@ -8,22 +8,49 @@ body {
 #controls {
     position: fixed;
     bottom: 20px;
+    left: 0;
     width: 100%;
+
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+
     gap: 10px;
+    z-index: 9999;
+}
+
+.row {
+    display: flex;
+    flex-direction: row;   /* IMPORTANT FIX */
+    justify-content: center;
+    gap: 15px;
+    width: 100%;
 }
 
 #controls button {
-    width: 60px;
-    height: 60px;
-    font-size: 20px;
+    width: 75px;
+    height: 75px;
+    font-size: 26px;
     border-radius: 50%;
     border: none;
-    background: rgba(0,0,0,0.5);
-    color: white;
-}
 
+    background: rgba(0, 0, 0, 0.6);
+    color: white;
+
+    box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+
+    touch-action: none;
+    user-select: none;
+}
+#controls button {
+    -webkit-user-select: none;
+    user-select: none;
+
+    -webkit-touch-callout: none; /* disables copy menu */
+    touch-action: manipulation;   /* prevents long-press menu */
+
+    outline: none;
+}
 canvas {
     display: block;
 }
