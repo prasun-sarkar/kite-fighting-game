@@ -18,6 +18,13 @@ let playerCut = false;
 let enemyCut = false;
 let enemyHitCount = 0;
 
+let control = {
+    up: false,
+    down: false,
+    left: false,
+    right: false
+};
+
 // ================= PLAYER =================
 let kite = {
     x: canvas.width / 2,
@@ -61,6 +68,25 @@ document.body.addEventListener("touchmove", function(e){
     e.preventDefault();
 }, { passive: false });
 
+// KEYBOARD CONTROL (Laptop)
+document.addEventListener("keydown", (e) => {
+
+    if (e.key === "ArrowUp") control.up = true;
+    if (e.key === "ArrowDown") control.down = true;
+    if (e.key === "ArrowLeft") control.left = true;
+    if (e.key === "ArrowRight") control.right = true;
+});
+
+document.addEventListener("keyup", (e) => {
+
+    if (e.key === "ArrowUp") control.up = false;
+    if (e.key === "ArrowDown") control.down = false;
+    if (e.key === "ArrowLeft") control.left = false;
+    if (e.key === "ArrowRight") control.right = false;
+});
+
+
+
 // ================= MOBILE TOUCH CONTROL =================
 canvas.addEventListener("touchmove", function (e) {
 
@@ -75,6 +101,34 @@ canvas.addEventListener("touchmove", function (e) {
     kite.y += (touchY - kite.y) * 0.1;
 
 });
+
+// ================= MOBILE BUTTON CONTROL 2 =================
+let move = {
+    left: false,
+    right: false,
+    up: false,
+    down: false
+};
+
+// LEFT
+document.getElementById("left").addEventListener("touchstart", () => move.left = true);
+document.getElementById("left").addEventListener("touchend", () => move.left = false);
+
+// RIGHT
+document.getElementById("right").addEventListener("touchstart", () => move.right = true);
+document.getElementById("right").addEventListener("touchend", () => move.right = false);
+
+// UP
+document.getElementById("up").addEventListener("touchstart", () => move.up = true);
+document.getElementById("up").addEventListener("touchend", () => move.up = false);
+
+// DOWN
+document.getElementById("down").addEventListener("touchstart", () => move.down = true);
+document.getElementById("down").addEventListener("touchend", () => move.down = false);
+
+
+
+
 
 function resizeCanvas() {
     canvas.width = window.innerWidth;
@@ -127,6 +181,7 @@ function drawBackgroundKites() {
 // ================= MOVE PLAYER =================
 function moveKite() {
 
+    // fall logic
     if (playerCut) {
         kite.fallSpeed += 0.4;
         kite.y += kite.fallSpeed;
@@ -138,18 +193,19 @@ function moveKite() {
         return;
     }
 
-    if (keys["ArrowUp"]) kite.vy -= 0.4;
-    if (keys["ArrowDown"]) kite.vy += 0.4;
+    // vertical
+    if (control.up) kite.vy -= 0.4;
+    if (control.down) kite.vy += 0.4;
 
     kite.vy *= 0.95;
-    kite.vy = Math.max(-5, Math.min(5, kite.vy));
     kite.y += kite.vy;
 
-    if (keys["ArrowLeft"]) {
+    // horizontal
+    if (control.left) {
         kite.x -= kite.speed;
         rotation = -0.3;
     }
-    else if (keys["ArrowRight"]) {
+    else if (control.right) {
         kite.x += kite.speed;
         rotation = 0.3;
     }
@@ -157,6 +213,7 @@ function moveKite() {
         rotation *= 0.9;
     }
 
+    // boundaries
     if (kite.x < 50) kite.x = 50;
     if (kite.x > canvas.width - 50) kite.x = canvas.width - 50;
 
@@ -170,7 +227,6 @@ function moveKite() {
         kite.vy = 0;
     }
 }
-
 // ================= MOVE ENEMY =================
 function moveEnemy() {
 
